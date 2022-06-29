@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter import ttk
-from os.path import exists #No file path / Invalid file path?
+from os.path import exists  #No file path / Invalid file path?
 
-def delete():
+def delete():   #Deletes every entry object or box to leave the GIU empty.
     txFilas.delete('1.0', END)
     txColumnas.delete('1.0', END)
     txDeterminante.delete('1.0', END)
@@ -23,7 +23,7 @@ def delete():
     tx3x2.delete('1.0', END)
     tx3x3.delete('1.0', END)
 
-def readFile():
+def readFile(): #Takes the path of the file which contains the matrix information and inserts it into the entries.
     txFilas.delete('1.0', END)
     txColumnas.delete('1.0', END)
     txDeterminante.delete('1.0', END)
@@ -43,8 +43,8 @@ def readFile():
     tx3x1.delete('1.0', END)
     tx3x2.delete('1.0', END)
     tx3x3.delete('1.0', END)
-    #Value's deletion.
-    if((exists(txArchivo.get())) == False):
+    #Value's deletion. To avoid the string concatenating.
+    if((exists(txArchivo.get())) == False): #If the file path is invalid then returns nothing.
         txDeterminante.insert('1.0', 'Error: ANE.')
         return
     fname = open(txArchivo.get(), 'r')
@@ -89,7 +89,7 @@ def readFile():
         tx3x3.insert('1.0', line3[3])
     #--------------------------------------------------
 
-def callDet():
+def callDet():  #Depending the dimentions of the matrix, it will call to calculate a certain determinant. They all use different algorithms.
     if((filas == 2) & (columnas == 2)):
         txDeterminante.delete('1.0', END)
         det2x2()
@@ -119,28 +119,28 @@ def det4x4():
         txDeterminante.insert('1.0', d4)
     
 #------------------------------------------------------------------------
-def createWindow():
+def createWindow(): #The GUI is being generated.
     global root, txArchivo, txFilas, txColumnas, txDeterminante, txLeyenda
     global tx0x0, tx0x1, tx0x2, tx0x3
     global tx1x0, tx1x1, tx1x2, tx1x3
     global tx2x0, tx2x1, tx2x2, tx2x3
     global tx3x0, tx3x1, tx3x2, tx3x3
 
-    root = Tk()
+    root = Tk() #Main window. It will contain everything.
     root.geometry('600x400+300+300')
     #root.configure(bg = '')
     root.title("Cálculo de Determinantes")
     root.iconbitmap('icon.ico')
 
     #--------------------------------------------------------
-    btnReadFile = Button(root, text = 'Leer Archivo', command = readFile)
+    btnReadFile = Button(root, text = 'Leer Archivo', command = readFile)   #Buttons.
     btnReadFile.place(x = 500, y = 5)
     btnCalcDet = Button(root, text = 'Calcular Determinante', command = callDet)
     btnCalcDet.place(x = 20, y = 350)
     btnDelete = Button(root, text = 'Borrar', command = delete)
     btnDelete.place(x = 175, y = 350)
     #--------------------------------------------------------
-    lArchivo = Label(root, text = 'Archivo:')
+    lArchivo = Label(root, text = 'Archivo:')   #Labels.
     lArchivo.place(x = 20, y = 10)
     lMatriz = Label(root, text = 'Matriz')
     lMatriz.place(x = 20, y = 40)
@@ -150,10 +150,10 @@ def createWindow():
     lColumnas.place(x = 505, y = 50)
     lDeterminante = Label(root, text = 'Determinante:')
     lDeterminante.place(x = 375, y = 300)
-    txLeyenda = Label(root, text = 'Leyenda:\n-DI: Dimensiones Incompatibles.\n-MNC: Matriz No Cuadrada.\n-ANE: Archivo No Existente.', justify = LEFT)
+    txLeyenda = Label(root, text = 'Leyenda:\n-DI: Dimensiones Incompatibles.\n-MNC: Matriz No Cuadrada.\n-ANE: Archivo No Existente.', justify = LEFT) #Error codes.
     txLeyenda.place(x = 20, y =200)
     #--------------------------------------------------------
-    txArchivo = Entry(root, width = 64)
+    txArchivo = Entry(root, width = 64) #Entries.
     txArchivo.place(x = 75, y = 10)
     txFilas = Text(root, width = 3, height = 1)
     txFilas.place(x = 425, y = 75)
@@ -198,7 +198,7 @@ def createWindow():
     tx3x3 = Text(root, width = 5, height = 1)
     tx3x3.place(x = 202, y = 165)
 
-    txArchivo.focus()
+    txArchivo.focus()   #When the program executes it focus in the file path text box so the user can directly type the path, without grabbing the mouse to click it.
 #-----------------------------------------------------------------------
 createWindow()
-root.mainloop()
+root.mainloop() #Keeps the GUI listeting to new events.
