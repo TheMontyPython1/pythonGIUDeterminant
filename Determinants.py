@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from os.path import exists #No bitches?
+from os.path import exists #No file path / Invalid file path?
 
 def delete():
     txFilas.delete('1.0', END)
